@@ -1,0 +1,33 @@
+# Ruby
+/.bundle/
+/vendor/bundle/
+*.gem
+
+# Docs and coverage
+/.yardoc
+/_yardoc/
+/coverage/
+/doc/
+/pkg/
+/spec/reports/
+
+# Temp and logs
+/tmp/
+/log/*
+!/log/.keep
+
+# RSpec failure tracking
+.rspec_status
+
+# OS/editor
+.DS_Store
+.idea/
+.vscode/
+
+# Demo app artifacts
+/demo/rails/log/*
+!/demo/rails/log/.keep
+/demo/rails/tmp/*
+!/demo/rails/tmp/.keep
+/demo/rails/node_modules/
+/demo/rails/storage/
