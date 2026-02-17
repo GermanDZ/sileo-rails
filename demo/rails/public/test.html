@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sileo Test - Simple</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; max-width: 800px; margin: 0 auto; }
+    button { margin: 5px; padding: 10px 20px; font-size: 14px; cursor: pointer; }
+    .success { background: #22c55e; color: white; border: none; border-radius: 6px; }
+    .error { background: #ef4444; color: white; border: none; border-radius: 6px; }
+    .warning { background: #eab308; color: white; border: none; border-radius: 6px; }
+    .info { background: #3b82f6; color: white; border: none; border-radius: 6px; }
+    #status { margin: 20px 0; padding: 10px; border-radius: 6px; }
+    .ok { background: #dcfce7; color: #166534; }
+    .error-box { background: #fee2e2; color: #991b1b; }
+  </style>
+</head>
+<body>
+  <h1>🎉 Sileo Rails - Simple Test</h1>
+  
+  <div id="status">Checking Sileo...</div>
+
+  <h2>Test Notifications</h2>
+  <button class="success" onclick="testSuccess()">✅ Success</button>
+  <button class="error" onclick="testError()">❌ Error</button>
+  <button class="warning" onclick="testWarning()">⚠️ Warning</button>
+  <button class="info" onclick="testInfo()">ℹ️ Info</button>
+
+  <hr>
+  
+  <h3>Console</h3>
+  <pre id="console" style="background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 6px; overflow: auto; max-height: 200px;"></pre>
+
+  <script>
+    const consoleEl = document.getElementById('console');
+    const statusEl = document.getElementById('status');
+    
+    function log(msg) {
+      consoleEl.textContent += msg + '\n';
+      console.log(msg);
+    }
+
+    function checkSileo() {
+      log('Checking if Sileo exists...');
+      log('typeof window.Sileo: ' + typeof window.Sileo);
+      
+      if (typeof window.Sileo !== 'undefined') {
+        statusEl.className = 'ok';
+        statusEl.textContent = '✅ Sileo is loaded!';
+        log('SUCCESS: Sileo API is available');
+        log('Available methods: ' + Object.keys(window.Sileo).join(', '));
+      } else {
+        statusEl.className = 'error-box';
+        statusEl.textContent = '❌ Sileo not found';
+        log('ERROR: Sileo is not defined');
+        log('Checking importmap...');
+        
+        // Check if importmap has Sileo
+        if (typeof importmap !== 'undefined') {
+          const imports = importmap.imports || {};
+          log('Importmap imports: ' + JSON.stringify(Object.keys(imports), null, 2));
+        }
+      }
+    }
+
+    function testSuccess() {
+      log('Calling Sileo.success...');
+      try {
+        const id = Sileo.success('Test Success!');
+        log('Success! Toast ID: ' + id);
+      } catch (e) {
+        log('Error: ' + e.message);
+      }
+    }
+
+    function testError() {
+      log('Calling Sileo.error...');
+      try {
+        const id = Sileo.error('Test Error!');
+        log('Success! Toast ID: ' + id);
+      } catch (e) {
+        log('Error: ' + e.message);
+      }
+    }
+
+    function testWarning() {
+      log('Calling Sileo.warning...');
+      try {
+        const id = Sileo.warning('Test Warning!');
+        log('Success! Toast ID: ' + id);
+      } catch (e) {
+        log('Error: ' + e.message);
+      }
+    }
+
+    function testInfo() {
+      log('Calling Sileo.info...');
+      try {
+        const id = Sileo.info('Test Info!');
+        log('Success! Toast ID: ' + id);
+      } catch (e) {
+        log('Error: ' + e.message);
+      }
+    }
+
+    // Check on load
+    window.addEventListener('DOMContentLoaded', () => {
+      log('DOM loaded');
+      setTimeout(checkSileo, 1000);
+    });
+
+    // Also check after Stimulus loads
+    if (typeof Stimulus !== 'undefined') {
+      log('Stimulus detected');
+      log('Registered controllers: ' + Object.keys(Stimulus.application.controllers).join(', '));
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,208 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-12">
+      <h1 class="display-4 mb-4">🎉 Sileo Rails Demo</h1>
+      <p class="lead">Beautiful physics-based toast notifications for Rails</p>
+      <hr class="my-4">
+    </div>
+  </div>
+
+  <!-- Basic Examples -->
+  <div class="row mb-5">
+    <div class="col-12">
+      <h2>Basic Notifications</h2>
+      <p class="text-muted">Click the buttons to see different toast types with descriptions</p>
+      <div class="btn-group gap-2" role="group">
+        <button onclick="Sileo.success('Success!', { description: 'Your operation completed successfully.' })" class="btn btn-success">Success</button>
+        <button onclick="Sileo.error('Error!', { description: 'Something went wrong. Please try again.' })" class="btn btn-danger">Error</button>
+        <button onclick="Sileo.warning('Warning!', { description: 'Please review your input before continuing.' })" class="btn btn-warning">Warning</button>
+        <button onclick="Sileo.info('Info!', { description: 'Here is some helpful information for you.' })" class="btn btn-info">Info</button>
+        <button onclick="const id = Sileo.loading('Loading...', { description: 'Please wait while we process your request.' }); setTimeout(() => Sileo.dismiss(id), 3000);" class="btn btn-secondary">Loading</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Without Descriptions -->
+  <div class="row mb-5">
+    <div class="col-12">
+      <h2>Without Descriptions</h2>
+      <p class="text-muted">Simple toasts with just a title</p>
+      <div class="btn-group gap-2" role="group">
+        <button onclick="Sileo.success('Saved!')" class="btn btn-success">Success</button>
+        <button onclick="Sileo.error('Failed!')" class="btn btn-danger">Error</button>
+        <button onclick="Sileo.warning('Careful!')" class="btn btn-warning">Warning</button>
+        <button onclick="Sileo.info('Note')" class="btn btn-info">Info</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Without Badge -->
+  <div class="row mb-5">
+    <div class="col-12">
+      <h2>Without Badge</h2>
+      <p class="text-muted">Toasts with hidden icon badge (`icon: null`)</p>
+      <div class="btn-group gap-2 flex-wrap" role="group">
+        <button onclick="Sileo.success('No Badge Success', { icon: null })" class="btn btn-success">Simple</button>
+        <button onclick="Sileo.info('No Badge Custom', { icon: null, fill: '#8B5CF6' })" class="btn" style="background-color: #8B5CF6; color: white;">Custom Color</button>
+        <button onclick="Sileo.warning('No Badge Expanded', { icon: null, description: 'This toast has no badge and still expands normally.' })" class="btn btn-warning">Expanded</button>
+        <button onclick="Sileo.info('No Badge Bottom', { icon: null, description: 'Bottom positioned without badge.', position: 'bottom-right' })" class="btn btn-outline-primary">Bottom Right</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Durations -->
+  <div class="row mb-5">
+    <div class="col-12">
+      <h2>Custom Durations</h2>
+      <p class="text-muted">Control how long notifications appear</p>
+      <div class="btn-group gap-2" role="group">
+        <button onclick="Sileo.info('Short (2s)', { description: 'This will dismiss after 2 seconds.', duration: 2000 })" class="btn btn-primary">2 seconds</button>
+        <button onclick="Sileo.info('Long (10s)', { description: 'This will stay for 10 seconds.', duration: 10000 })" class="btn btn-primary">10 seconds</button>
+        <button onclick="Sileo.info('Sticky', { description: 'Click to dismiss - this will not auto-dismiss.', duration: null })" class="btn btn-primary">No Auto-Dismiss</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Positions -->
+  <div class="row mb-5">
+    <div class="col-12">
+      <h2>Different Positions</h2>
+      <p class="text-muted">Notifications can appear in 6 different positions with smart expansion</p>
+      <div class="btn-group gap-2 flex-wrap" role="group">
+        <button onclick="Sileo.success('Top Left!', { description: 'Expands to the right', position: 'top-left' })" class="btn btn-outline-primary">Top Left</button>
+        <button onclick="Sileo.success('Top Center!', { description: 'Expands equally on both sides', position: 'top-center' })" class="btn btn-outline-primary">Top Center</button>
+        <button onclick="Sileo.success('Top Right!', { description: 'Expands to the left', position: 'top-right' })" class="btn btn-outline-primary">Top Right</button>
+        <button onclick="Sileo.success('Bottom Left!', { description: 'Expands to the right', position: 'bottom-left' })" class="btn btn-outline-primary">Bottom Left</button>
+        <button onclick="Sileo.success('Bottom Center!', { description: 'Expands equally on both sides', position: 'bottom-center' })" class="btn btn-outline-primary">Bottom Center</button>
+        <button onclick="Sileo.success('Bottom Right!', { description: 'Expands to the left', position: 'bottom-right' })" class="btn btn-outline-primary">Bottom Right</button>
+        <button onclick="
+          [
+            ['top-left', 'Top Left'],
+            ['top-center', 'Top Center'],
+            ['top-right', 'Top Right'],
+            ['bottom-left', 'Bottom Left'],
+            ['bottom-center', 'Bottom Center'],
+            ['bottom-right', 'Bottom Right']
+          ].forEach(([position, label]) => {
+            Sileo.info(label, { description: `Notification at ${position}`, position })
+          })
+        " class="btn btn-primary">Show All Positions</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Promise Handling -->
+  <div class="row mb-5">
+    <div class="col-12">
+      <h2>Promise Handling</h2>
+      <p class="text-muted">Automatically show loading, success, and error toasts</p>
+      <div class="btn-group gap-2" role="group">
+        <button onclick="
+          Sileo.promise(
+            fetch('https://jsonplaceholder.typicode.com/posts/1'),
+            {
+              loading: { title: 'Fetching data...' },
+              success: { title: 'Data loaded!', description: 'Successfully fetched from API' },
+              error: { title: 'Failed to load' }
+            }
+          )
+        " class="btn btn-success">
+          Fetch API (Success)
+        </button>
+        <button onclick="
+          Sileo.promise(
+            fetch('https://invalid-url-that-fails.com'),
+            {
+              loading: { title: 'Attempting...' },
+              success: { title: 'Success' },
+              error: { title: 'Request failed', description: 'Could not connect to server' }
+            }
+          ).catch(() => {})
+        " class="btn btn-danger">
+          Fetch API (Error)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Colors -->
+  <div class="row mb-5">
+    <div class="col-12">
+      <h2>Custom Colors</h2>
+      <p class="text-muted">Use any color you want</p>
+      <div class="btn-group gap-2" role="group">
+        <button onclick="Sileo.info('Custom Pink!', { description: 'You can use any hex color for your toasts.', fill: '#EC4899' })" class="btn btn-pink" style="background-color: #EC4899; color: white;">Pink</button>
+        <button onclick="Sileo.info('Custom Purple!', { description: 'Brand colors work great for consistent design.', fill: '#8B5CF6' })" class="btn" style="background-color: #8B5CF6; color: white;">Purple</button>
+        <button onclick="Sileo.info('Custom Orange!', { description: 'Perfect for attention-grabbing notifications.', fill: '#F97316' })" class="btn btn-warning" style="background-color: #F97316; color: white;">Orange</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Multiple Notifications -->
+  <div class="row mb-5">
+    <div class="col-12">
+      <h2>Multiple Notifications</h2>
+      <p class="text-muted">Show multiple toasts at once</p>
+      <button onclick="
+        Sileo.success('First notification', { description: 'This is the first toast in the sequence.' });
+        setTimeout(() => Sileo.info('Second notification', { description: 'Here comes the second one.' }), 500);
+        setTimeout(() => Sileo.warning('Third notification', { description: 'And finally the third notification.' }), 1000);
+      " class="btn btn-info">
+        Show 3 Notifications
+      </button>
+    </div>
+  </div>
+
+  <!-- Clear All -->
+  <div class="row mb-5">
+    <div class="col-12">
+      <h2>Clear All</h2>
+      <p class="text-muted">Add some notifications first, then clear them all</p>
+      <div class="btn-group gap-2" role="group">
+        <button onclick="Sileo.success('Test 1', { description: 'First test notification', duration: null }); Sileo.info('Test 2', { description: 'Second test notification', duration: null }); Sileo.warning('Test 3', { description: 'Third test notification', duration: null });" class="btn btn-secondary">
+          Add 3 Sticky Notifications
+        </button>
+        <button onclick="Sileo.clear()" class="btn btn-danger">
+          Clear All
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ruby Integration -->
+  <div class="row mb-5">
+    <div class="col-12">
+      <h2>Ruby Integration</h2>
+      <p class="text-muted">Test server-side notifications</p>
+      <%= button_to "Trigger Server Notification", "/test_notification", method: :post, class: "btn btn-primary" %>
+    </div>
+  </div>
+
+  <!-- Instructions -->
+  <div class="row mt-5">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="mb-0">💡 How to Use</h3>
+        </div>
+        <div class="card-body">
+          <h5>From Ruby:</h5>
+          <pre class="bg-dark text-light p-3 rounded"><code>&lt;%= sileo_notify "Success!", type: :success %&gt;</code></pre>
+
+          <h5 class="mt-3">From JavaScript:</h5>
+          <pre class="bg-dark text-light p-3 rounded"><code>Sileo.success("Success!");</code></pre>
+
+          <h5 class="mt-3">With Promises:</h5>
+          <pre class="bg-dark text-light p-3 rounded"><code>await Sileo.promise(
+  fetch('/api/data'),
+  {
+    loading: { title: "Loading..." },
+    success: { title: "Done!" },
+    error: { title: "Failed" }
+  }
+);</code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

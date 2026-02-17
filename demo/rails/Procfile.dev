@@ -1,0 +1,2 @@
+web: env RUBY_DEBUG_OPEN=true PIDFILE=/tmp/sileo_demo-dev-$$.pid bin/rails server
+css: sh -c 'if yarn watch:css; then exit 0; else echo "CSS watcher disabled (missing JS deps). Run: yarn add -D sass postcss postcss-cli autoprefixer"; while true; do sleep 3600; done; fi'

@@ -1,0 +1,499 @@
+:root {
+  --sileo-spring-easing: linear(
+    0,
+    0.002 0.6%,
+    0.007 1.2%,
+    0.015 1.8%,
+    0.026 2.4%,
+    0.041 3.1%,
+    0.06 3.8%,
+    0.108 5.3%,
+    0.157 6.6%,
+    0.214 8%,
+    0.467 13.7%,
+    0.577 16.3%,
+    0.631 17.7%,
+    0.682 19.1%,
+    0.73 20.5%,
+    0.771 21.8%,
+    0.808 23.1%,
+    0.844 24.5%,
+    0.874 25.8%,
+    0.903 27.2%,
+    0.928 28.6%,
+    0.952 30.1%,
+    0.972 31.6%,
+    0.988 33.1%,
+    1.01 35.7%,
+    1.025 38.5%,
+    1.034 41.6%,
+    1.038 45%,
+    1.035 50.1%,
+    1.012 64.2%,
+    1.003 73%,
+    0.999 83.7%,
+    1
+  );
+
+  --sileo-duration: 600ms;
+  --sileo-height: 40px;
+  --sileo-width: 640px;
+  --sileo-roundness: 18px;
+
+  --sileo-state-success: oklch(0.723 0.219 142.136);
+  --sileo-state-loading: oklch(0.556 0 0);
+  --sileo-state-error: oklch(0.637 0.237 25.331);
+  --sileo-state-warning: oklch(0.795 0.184 86.047);
+  --sileo-state-info: oklch(0.685 0.169 237.323);
+  --sileo-state-action: oklch(0.623 0.214 259.815);
+}
+
+[data-sileo-viewport] {
+  --sileo-offset-top: 16px;
+  --sileo-offset-right: 16px;
+  --sileo-offset-bottom: 16px;
+  --sileo-offset-left: 16px;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  pointer-events: none;
+  z-index: 9999;
+  max-width: min(calc(100vw - 24px), var(--sileo-width));
+}
+
+[data-sileo-viewport][data-position="top-left"] {
+  top: var(--sileo-offset-top);
+  left: var(--sileo-offset-left);
+  align-items: flex-start;
+}
+
+[data-sileo-viewport][data-position="top-center"] {
+  top: var(--sileo-offset-top);
+  left: 50%;
+  transform: translateX(-50%);
+  align-items: center;
+}
+
+[data-sileo-viewport][data-position="top-right"] {
+  top: var(--sileo-offset-top);
+  right: var(--sileo-offset-right);
+  align-items: flex-end;
+}
+
+[data-sileo-viewport][data-position="bottom-left"] {
+  bottom: var(--sileo-offset-bottom);
+  left: var(--sileo-offset-left);
+  align-items: flex-start;
+}
+
+[data-sileo-viewport][data-position="bottom-center"] {
+  bottom: var(--sileo-offset-bottom);
+  left: 50%;
+  transform: translateX(-50%);
+  align-items: center;
+}
+
+[data-sileo-viewport][data-position="bottom-right"] {
+  bottom: var(--sileo-offset-bottom);
+  right: var(--sileo-offset-right);
+  align-items: flex-end;
+}
+
+[data-sileo-viewport][data-position*="bottom"] {
+  flex-direction: column-reverse;
+}
+
+[data-sileo-toast] {
+  --sileo-content-height: 0px;
+  --sileo-overlap: 18px;
+  --sileo-body-lift: 0px;
+  --sileo-body-separation: 0px;
+  --sileo-header-scale: 1;
+  --sileo-pill-height: var(--sileo-height);
+  --sileo-pill-collapsed: 220px;
+  --sileo-pill-expanded: 220px;
+  --sileo-anchor-left: auto;
+  --sileo-anchor-right: 0;
+  --sileo-anchor-shift: 0%;
+  width: min(var(--sileo-toast-width, var(--sileo-width)), calc(100vw - 24px));
+  height: var(--sileo-pill-height);
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateY(-6px) scale(0.96) translateX(var(--sileo-drag-x, 0px));
+  transform-origin: center;
+  will-change: transform, opacity;
+  opacity: var(--sileo-drag-opacity, 1);
+  transition:
+    height calc(var(--sileo-duration) * 0.66) var(--sileo-spring-easing),
+    opacity calc(var(--sileo-duration) * 0.66) var(--sileo-spring-easing),
+    transform calc(var(--sileo-duration) * 0.66) var(--sileo-spring-easing);
+}
+
+[data-sileo-viewport][data-position*="bottom"] [data-sileo-toast] {
+  transform: translateY(6px) scale(0.96) translateX(var(--sileo-drag-x, 0px));
+}
+
+[data-sileo-toast][data-ready="true"] {
+  opacity: var(--sileo-drag-opacity, 1);
+  transform: translateY(0) scale(1) translateX(var(--sileo-drag-x, 0px));
+}
+
+[data-sileo-toast][data-expanded="true"] {
+  height: calc(var(--sileo-pill-height) + var(--sileo-content-height));
+  --sileo-header-scale: 0.9;
+  --sileo-body-separation: 8px;
+  --sileo-overlap: 20px;
+}
+
+[data-sileo-toast][data-edge="bottom"][data-expanded="true"] {
+  --sileo-body-separation: 12px;
+  --sileo-overlap: 16px;
+}
+
+[data-sileo-toast][data-edge="top"][data-expanded="true"] {
+  --sileo-overlap: 12px;
+  --sileo-body-lift: 0px;
+  --sileo-body-separation: 12px;
+}
+
+[data-sileo-toast][data-exiting="true"] {
+  opacity: 0;
+  transform: translateX(calc(26px + var(--sileo-drag-x, 0px))) scale(0.96);
+}
+
+[data-sileo-toast][data-dragging="true"] {
+  transition: none;
+}
+
+[data-sileo-card] {
+  --sileo-tone: #111216;
+  --sileo-accent: #f3f4f6;
+  --sileo-surface: var(--sileo-fill, var(--sileo-tone));
+  color: #fff;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 14px 28px rgb(0 0 0 / 0.16)) drop-shadow(0 6px 10px rgb(0 0 0 / 0.10));
+}
+
+[data-sileo-defs] { position: absolute; width: 0; height: 0; }
+
+[data-sileo-goo] {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  filter: var(--sileo-goo-filter);
+}
+
+[data-sileo-goo-pill],
+[data-sileo-goo-body] {
+  position: absolute;
+  background: var(--sileo-surface);
+  border-radius: calc(var(--sileo-roundness) + 10px);
+}
+
+[data-sileo-goo-pill] {
+  width: var(--sileo-pill-collapsed);
+  height: var(--sileo-pill-height);
+  top: 0;
+  left: var(--sileo-anchor-left);
+  right: var(--sileo-anchor-right);
+  transform: translateX(var(--sileo-anchor-shift));
+  transition:
+    width calc(var(--sileo-duration) * 0.66) var(--sileo-spring-easing),
+    height calc(var(--sileo-duration) * 0.66) var(--sileo-spring-easing),
+    left calc(var(--sileo-duration) * 0.66) var(--sileo-spring-easing),
+    right calc(var(--sileo-duration) * 0.66) var(--sileo-spring-easing),
+    transform calc(var(--sileo-duration) * 0.66) var(--sileo-spring-easing),
+    top calc(var(--sileo-duration) * 0.66) var(--sileo-spring-easing),
+    bottom calc(var(--sileo-duration) * 0.66) var(--sileo-spring-easing);
+}
+
+[data-sileo-toast][data-expanded="true"] [data-sileo-goo-pill] {
+  width: var(--sileo-pill-expanded);
+  height: calc(var(--sileo-pill-height) + 10px);
+}
+
+[data-sileo-goo-body] {
+  left: 0;
+  right: 0;
+  top: calc(var(--sileo-pill-height) - var(--sileo-overlap) - var(--sileo-body-lift) + var(--sileo-body-separation));
+  height: 0;
+  opacity: 0;
+  transition:
+    height calc(var(--sileo-duration) * 0.66) var(--sileo-spring-easing),
+    opacity calc(var(--sileo-duration) * 0.66) var(--sileo-spring-easing),
+    top calc(var(--sileo-duration) * 0.66) var(--sileo-spring-easing),
+    bottom calc(var(--sileo-duration) * 0.66) var(--sileo-spring-easing);
+}
+
+[data-sileo-toast][data-expanded="true"] [data-sileo-goo-body] {
+  opacity: 1;
+  height: var(--sileo-content-height);
+}
+
+/* Flatten touching corners for side-anchored expanded toasts to avoid side scoops */
+[data-sileo-toast][data-expanded="true"][data-edge="top"][data-align="left"] [data-sileo-goo-pill] {
+  border-top-left-radius: 0;
+}
+
+[data-sileo-toast][data-expanded="true"][data-edge="top"][data-align="left"] [data-sileo-goo-body] {
+  border-bottom-left-radius: 0;
+}
+
+[data-sileo-toast][data-expanded="true"][data-edge="top"][data-align="right"] [data-sileo-goo-pill] {
+  border-top-right-radius: 0;
+}
+
+[data-sileo-toast][data-expanded="true"][data-edge="top"][data-align="right"] [data-sileo-goo-body] {
+  border-bottom-right-radius: 0;
+}
+
+[data-sileo-toast][data-expanded="true"][data-edge="bottom"][data-align="left"] [data-sileo-goo-pill] {
+  border-bottom-left-radius: 0;
+}
+
+[data-sileo-toast][data-expanded="true"][data-edge="bottom"][data-align="left"] [data-sileo-goo-body] {
+  border-top-left-radius: 0;
+}
+
+[data-sileo-toast][data-expanded="true"][data-edge="bottom"][data-align="right"] [data-sileo-goo-pill] {
+  border-bottom-right-radius: 0;
+}
+
+[data-sileo-toast][data-expanded="true"][data-edge="bottom"][data-align="right"] [data-sileo-goo-body] {
+  border-top-right-radius: 0;
+}
+
+[data-sileo-toast][data-state="default"] [data-sileo-card] { --sileo-accent: #f3f4f6; }
+[data-sileo-toast][data-state="success"] [data-sileo-card] { --sileo-accent: var(--sileo-state-success); }
+[data-sileo-toast][data-state="loading"] [data-sileo-card] { --sileo-accent: var(--sileo-state-loading); }
+[data-sileo-toast][data-state="error"] [data-sileo-card] { --sileo-accent: var(--sileo-state-error); }
+[data-sileo-toast][data-state="warning"] [data-sileo-card] { --sileo-accent: var(--sileo-state-warning); }
+[data-sileo-toast][data-state="info"] [data-sileo-card] { --sileo-accent: var(--sileo-state-info); }
+[data-sileo-toast][data-state="action"] [data-sileo-card] { --sileo-accent: var(--sileo-state-action); }
+[data-sileo-toast][data-theme="dark"] [data-sileo-card] { --sileo-tone: #111; }
+
+[data-sileo-header] {
+  position: absolute;
+  top: 0;
+  height: var(--sileo-pill-height);
+  min-height: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  padding: 0 12px;
+  width: var(--sileo-pill-collapsed);
+  max-width: var(--sileo-pill-collapsed);
+  left: var(--sileo-anchor-left);
+  right: var(--sileo-anchor-right);
+  transform: translateX(var(--sileo-anchor-shift));
+  border-radius: calc(var(--sileo-roundness) + 6px);
+  cursor: pointer;
+  margin: 0;
+  z-index: 3;
+  background: transparent;
+  box-sizing: border-box;
+  overflow: hidden;
+  transform-origin: center center;
+  transition:
+    width calc(var(--sileo-duration) * 0.66) var(--sileo-spring-easing),
+    left calc(var(--sileo-duration) * 0.66) var(--sileo-spring-easing),
+    right calc(var(--sileo-duration) * 0.66) var(--sileo-spring-easing),
+    transform calc(var(--sileo-duration) * 0.75) cubic-bezier(0.22, 0.61, 0.36, 1),
+    top calc(var(--sileo-duration) * 0.66) var(--sileo-spring-easing),
+    bottom calc(var(--sileo-duration) * 0.66) var(--sileo-spring-easing),
+    opacity calc(var(--sileo-duration) * 0.45) ease;
+}
+
+[data-sileo-header]:focus-visible {
+  outline: 2px solid rgb(255 255 255 / 0.48);
+  outline-offset: 2px;
+}
+
+[data-sileo-toast][data-has-badge="false"] [data-sileo-header] {
+  gap: 0;
+}
+
+[data-sileo-toast][data-expanded="true"] [data-sileo-header] {
+  width: var(--sileo-pill-collapsed);
+}
+
+[data-sileo-badge] {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--sileo-icon-color, var(--sileo-accent));
+  background: color-mix(in oklch, var(--sileo-icon-color, var(--sileo-accent)) 22%, transparent);
+  transition: none;
+}
+[data-sileo-badge][hidden] {
+  display: none;
+}
+
+[data-sileo-title] {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.25;
+  text-align: left;
+  color: var(--sileo-title-color, var(--sileo-accent));
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: clip;
+  overflow-wrap: anywhere;
+  transition: none;
+}
+
+[data-sileo-toast][data-simple="true"] [data-sileo-title] {
+  white-space: nowrap;
+  overflow-wrap: normal;
+  text-overflow: ellipsis;
+}
+
+[data-sileo-toast][data-expanded="true"] [data-sileo-header] {
+  transform: translateX(var(--sileo-anchor-shift)) scale(var(--sileo-header-scale));
+  opacity: 1;
+}
+
+[data-sileo-toast]:not([data-expanded="true"]) [data-sileo-header] {
+  transform: translateX(var(--sileo-anchor-shift)) scale(1);
+}
+
+[data-sileo-toast][data-expanded="true"] [data-sileo-title],
+[data-sileo-toast][data-expanded="true"] [data-sileo-badge] {
+  opacity: 1;
+}
+
+[data-sileo-body] {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(var(--sileo-pill-height) - var(--sileo-overlap) - var(--sileo-body-lift) + var(--sileo-body-separation));
+  width: 100%;
+  border-radius: calc(var(--sileo-roundness) + 12px);
+  max-height: var(--sileo-content-height);
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  padding: 0;
+  background: transparent;
+  z-index: 2;
+  transition:
+    opacity calc(var(--sileo-duration) * 0.66) var(--sileo-spring-easing),
+    top calc(var(--sileo-duration) * 0.66) var(--sileo-spring-easing),
+    bottom calc(var(--sileo-duration) * 0.66) var(--sileo-spring-easing);
+}
+
+[data-sileo-body-inner] {
+  padding: 22px 30px 18px;
+  border-radius: inherit;
+}
+
+[data-sileo-toast][data-edge="top"] [data-sileo-body-inner] {
+  padding-top: 10px;
+  padding-bottom: 16px;
+}
+
+[data-sileo-toast][data-expanded="true"] [data-sileo-body] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+[data-sileo-toast][data-edge="top"] [data-sileo-goo-pill] {
+  top: auto;
+  bottom: 0;
+}
+
+[data-sileo-toast][data-edge="top"] [data-sileo-goo-body] {
+  top: auto;
+  bottom: calc(var(--sileo-pill-height) - var(--sileo-overlap) - var(--sileo-body-lift) + var(--sileo-body-separation));
+}
+
+[data-sileo-toast][data-edge="top"] [data-sileo-header] {
+  top: auto;
+  bottom: 0;
+}
+
+[data-sileo-toast][data-edge="top"] [data-sileo-body] {
+  top: auto;
+  bottom: calc(var(--sileo-pill-height) - var(--sileo-overlap) - var(--sileo-body-lift) + var(--sileo-body-separation));
+}
+
+[data-sileo-toast][data-expanded="true"][data-align="left"],
+[data-sileo-toast][data-expanded="true"][data-align="right"] {
+  --sileo-body-lift: 8px;
+}
+
+[data-sileo-toast][data-edge="top"][data-expanded="true"][data-align="left"],
+[data-sileo-toast][data-edge="top"][data-expanded="true"][data-align="right"] {
+  --sileo-body-lift: 0px;
+}
+
+[data-sileo-description] {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.46;
+  color: rgb(243 244 246 / 0.96);
+}
+
+[data-sileo-action] {
+  margin-top: 8px;
+  border: 0;
+  appearance: none;
+  border-radius: 999px;
+  padding: 8px 14px;
+  background: rgb(255 255 255 / 0.2);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+[data-sileo-toast][data-state="loading"] [data-sileo-badge] {
+  animation: sileo-spin 1.1s linear infinite;
+}
+
+@keyframes sileo-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 640px) {
+  [data-sileo-toast] {
+    width: calc(100vw - 24px);
+  }
+
+  [data-sileo-header] {
+    width: var(--sileo-pill-collapsed);
+    max-width: min(var(--sileo-pill-collapsed), calc(100vw - 24px));
+  }
+
+  [data-sileo-body-inner] {
+    padding: 18px 18px 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-sileo-toast],
+  [data-sileo-body],
+  [data-sileo-toast][data-ready="true"] {
+    animation: none;
+    transition-duration: 10ms;
+  }
+}
