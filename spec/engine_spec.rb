@@ -19,4 +19,12 @@ RSpec.describe "Engine integration files" do
 
     expect(File).to exist(css_path)
   end
+
+  it "does not register the redundant app/assets parent path that causes Propshaft dedup collision" do
+    engine_file = File.expand_path("../lib/sileo/engine.rb", __dir__)
+    content = File.read(engine_file)
+
+    expect(content).not_to include('root.join("app/assets")')
+    expect(content).to include('root.join("app/assets/stylesheets")')
+  end
 end
