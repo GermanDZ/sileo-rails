@@ -58,7 +58,7 @@ In your layout (`app/views/layouts/application.html.erb`), render the toaster:
 If you prefer linking CSS manually in the layout with Propshaft, use:
 
 ```erb
-<%= stylesheet_link_tag "stylesheets/sileo", "data-turbo-track": "reload" %>
+<%= stylesheet_link_tag "sileo", "data-turbo-track": "reload" %>
 ```
 
 ## Quick Start In Any Rails Project

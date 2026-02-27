@@ -43,4 +43,4 @@ PORT=3008 bin/dev
 
 - The app uses `gem "sileo-rails", path: "../.."`.
 - The layout links the gem stylesheet via Propshaft logical path:
-  `stylesheets/sileo`.
+  `sileo`.
