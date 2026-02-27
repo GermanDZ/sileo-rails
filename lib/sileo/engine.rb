@@ -17,7 +17,6 @@ module Sileo
 
     initializer "sileo.assets", before: "propshaft.append_assets_path" do |app|
       if app.config.respond_to?(:assets)
-        app.config.assets.paths << root.join("app/assets")
         app.config.assets.paths << root.join("app/assets/stylesheets")
         app.config.assets.paths << root.join("app/javascript")
         app.config.assets.paths.uniq!
